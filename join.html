@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join Us | Kenyan ARMY Hub</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- HEADER -->
+  <header>
+    <h1>Kenyan ARMY Hub 💜</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="members.html">Members</a></li>
+        <li><a href="shows.html">Shows</a></li>
+        <li><a href="community.html">Community</a></li>
+        <li><a href="join.html" class="active">Join Us</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main>
+    <section id="join">
+      <h2>Join the Kenyan ARMY Hub 💜</h2>
+      <p>Fill out the form below to share your ARMY story with our community.</p>
+
+      <form id="join-form">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" placeholder="Your full name" required>
+
+        <label for="favorite-member">Favorite BTS Member</label>
+        <select id="favorite-member" name="favorite-member" required>
+          <option value="">Select a member</option>
+          <option value="RM">RM</option>
+          <option value="Jin">Jin</option>
+          <option value="Suga">Suga</option>
+          <option value="J-Hope">J-Hope</option>
+          <option value="Jimin">Jimin</option>
+          <option value="V">V</option>
+          <option value="Jungkook">Jungkook</option>
+        </select>
+
+        <label for="message">Your Message</label>
+        <textarea id="message" name="message" rows="5" placeholder="Share your BTS experience or fan story" required></textarea>
+
+        <button type="submit">Submit</button>
+      </form>
+
+      <div id="form-feedback"></div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 Kenyan ARMY Hub | Made with 💜 for BTS & ARMY</p>
+    <p>© 2025 Esther Gathatwa. All Rights Reserved.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
