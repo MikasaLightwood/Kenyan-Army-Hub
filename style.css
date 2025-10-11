@@ -452,6 +452,44 @@ footer {
 }
 /* End of Community.html CSS */
 /* Join Us Page */
+
+/* Join Page Background */
+body#join-body {
+  background: url('./Images/1.jpg') no-repeat center center fixed;
+  background-size: cover;
+  color: #fff; /* default text color for contrast */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.text-box {
+  background-color: rgba(245, 230, 250, 0.85); /* semi-transparent lilac */
+  padding: 15px 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.text-box h2 {
+  color: #6E1E91;
+  margin-bottom: 10px;
+}
+
+.text-box p {
+  color: #000;
+  font-size: 1rem;
+}
+header {
+  background-color: rgba(230, 207, 230, 0.9); /* semi-transparent lilac */
+  padding: 1rem 2rem;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
 /* Join Page Form */
 #join {
   max-width: 600px;
