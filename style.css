@@ -1,35 +1,30 @@
-/* General Styling */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
+/* Global Styles */
 body {
-  background-color: #f8f4fc; /* Soft lavender background */
+  background-color: #E6E6FA; /* Lavender background */
   color: #333;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.6;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  margin: 0;
+}
+
+h1, h2 {
+  color: #000; /* Header text black */
+}
+
+h1 {
+  margin-bottom: 0.5rem;
 }
 
 /* Header & Navigation */
 header {
-  background-color: #6E1E91; /* BTS dark purple */
-  color: #fff;
+  background-color: #D8B6E3; /* Softer purple header */
+  color: #000; /* Black text */
   padding: 1rem 2rem;
   text-align: center;
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-}
-
-header h1 {
-  font-size: 2rem;
-}
-
-nav {
-  margin-top: 1rem;
 }
 
 nav ul {
@@ -38,38 +33,35 @@ nav ul {
   justify-content: center;
   gap: 2rem;
   flex-wrap: wrap;
+  margin-top: 1rem;
 }
 
 nav a {
-  color: #fff;
-  font-weight: bold;
-  padding: 0.5rem 1rem;
+  color: #000; /* Links black by default */
+  text-decoration: none; /* remove underline */
+  padding: 0.5rem 0.75rem;
   border-radius: 5px;
-  transition: all 0.3s ease;
+  transition: color 0.3s ease;
 }
 
-nav a:hover,
+nav a:hover {
+  color: #32CD32; /* LimeGreen on hover */
+}
+
 nav a.active {
-  background-color: #fff;
-  color: #6E1E91;
-  box-shadow: 0 0 10px #6E1E91;
+  color: #000; /* Active link stays black */
 }
 
 /* Main Content */
 main {
   flex: 1;
-  padding: 2rem;
   max-width: 1200px;
   margin: 0 auto;
+  padding: 2rem;
 }
 
 section {
   margin-bottom: 3rem;
-}
-
-section h2 {
-  margin-bottom: 1rem;
-  color: #6E1E91;
 }
 
 section p {
@@ -77,29 +69,42 @@ section p {
   margin-top: 0.5rem;
 }
 
-/* Photo Gallery */
-.photo-gallery {
+/* Portrait Gallery */
+.portrait-gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 1rem;
-  margin-top: 1rem;
+  margin-bottom: 2rem;
 }
 
-.photo-gallery img {
+/* Landscape Gallery */
+.landscape-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+/* Common Image Styles */
+.portrait-gallery img,
+.landscape-gallery img {
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(110, 30, 145, 0.3);
+  width: 100%;
+  height: auto;
+  object-fit: cover;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.photo-gallery img:hover {
+.portrait-gallery img:hover,
+.landscape-gallery img:hover {
   transform: scale(1.05);
   box-shadow: 0 8px 16px rgba(110, 30, 145, 0.5);
 }
 
 /* Footer */
 footer {
-  background-color: #6E1E91;
-  color: #fff;
+  background-color: #D8B6E3; /* Softer purple like header */
+  color: #000;
   text-align: center;
   padding: 1rem 2rem;
   box-shadow: 0 -4px 10px rgba(110, 30, 145, 0.3);
@@ -124,15 +129,22 @@ footer p {
   main {
     padding: 1rem;
   }
+
+  .landscape-gallery {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
 }
 
 @media (max-width: 480px) {
-  nav ul {
-    gap: 0.5rem;
+  .portrait-gallery {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  }
+
+  .landscape-gallery {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   }
 
   section p {
     font-size: 1rem;
   }
 }
-/* End of index.html styles */
