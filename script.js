@@ -21,6 +21,7 @@ if (exists('join-form')) {
     e.preventDefault();
     const name = document.getElementById('name').value.trim();
     const memberInput = document.getElementById('favorite-member').value.trim().toLowerCase();
+    const armySince = document.getElementById('army-since').value; // new field
     const message = document.getElementById('message').value.trim();
 
     const memberMatched = Object.keys(validMembers).find(m => validMembers[m].includes(memberInput));
@@ -31,7 +32,7 @@ if (exists('join-form')) {
     }
 
     const submissions = JSON.parse(localStorage.getItem('armySubmissions')) || [];
-    submissions.push({ name, favoriteMember: memberMatched, message, date: new Date().toISOString() });
+    submissions.push({ name, favoriteMember: memberMatched, armySince, message, date: new Date().toISOString() });
     localStorage.setItem('armySubmissions', JSON.stringify(submissions));
 
     feedback.style.color = "#32CD32";
@@ -45,16 +46,17 @@ if (exists('community-container')) {
   const container = document.getElementById('community-container');
   const submissions = JSON.parse(localStorage.getItem('armySubmissions')) || [];
 
-  container.innerHTML = submissions.length
-    ? submissions.map(sub => `
-      <div class="community-card">
-        <h3>${sub.name}</h3>
-        <p><strong>Favorite Member:</strong> ${sub.favoriteMember}</p>
-        <p>${sub.message}</p>
-        <small>${new Date(sub.date).toLocaleString()}</small>
-      </div>`).join('')
-    : "<p>No submissions yet. Be the first to join!</p>";
 }
+container.innerHTML = submissions.length
+  ? submissions.map(sub => `
+    <div class="community-card">
+      <h3>${sub.name}</h3>
+      <p><strong>Favorite Member:</strong> ${sub.favoriteMember}</p>
+      <p><strong>ARMY Since:</strong> ${sub.armySince}</p>
+      <p>${sub.message}</p>
+      <small>${new Date(sub.date).toLocaleString()}</small>
+    </div>`).join('')
+  : "<p>No submissions yet. Be the first to join!</p>";
 
 // ===== MEMBERS HOVER =====
 if (exists('members')) {
