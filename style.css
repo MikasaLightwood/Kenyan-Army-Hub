@@ -291,3 +291,68 @@ footer {
 }
 
 /* End of Members.html CSS */
+
+/* Shows Page - Video Cards */
+.shows-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.show-card {
+  background-color: #f3e6fa; /* soft lilac */
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  overflow: hidden;
+  width: 300px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.show-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+.show-card video {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-bottom: 1px solid #ddd;
+  border-radius: 12px 12px 0 0;
+}
+
+.show-info {
+  padding: 10px 15px;
+  background-color: #fff;
+}
+
+.show-info h3 {
+  margin: 0 0 8px 0;
+  font-size: 1.2rem;
+  color: #6E1E91; /* your BTS purple */
+}
+
+.show-info p {
+  font-size: 0.95rem;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.show-info a {
+  text-decoration: none;
+  color: #6E1E91;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.show-info a:hover {
+  color: #32CD32; /* hover green */
+}
+@media screen and (max-width: 768px) {
+  .show-card {
+    width: 100%;
+    max-width: 400px;
+  }
+}
