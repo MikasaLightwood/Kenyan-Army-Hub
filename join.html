@@ -31,28 +31,20 @@
         </div>
 
       <form id="join-form">
-        <label for="name">Full Name</label>
-        <input type="text" id="name" name="name" placeholder="Your full name" required>
+    <label for="name">Your Name:</label>
+    <input type="text" id="name" name="name" required>
 
-        <label for="favorite-member">Favorite BTS Member</label>
-        <select id="favorite-member" name="favorite-member" required>
-          <option value="">Select a member</option>
-          <option value="RM">RM</option>
-          <option value="Jin">Jin</option>
-          <option value="Suga">Suga</option>
-          <option value="J-Hope">J-Hope</option>
-          <option value="Jimin">Jimin</option>
-          <option value="V">V</option>
-          <option value="Jungkook">Jungkook</option>
-        </select>
+    <label for="favorite-member">Favorite BTS Member (or OT7):</label>
+    <input type="text" id="favorite-member" name="favorite-member" required>
 
-        <label for="message">Your Message</label>
-        <textarea id="message" name="message" rows="5" placeholder="Share your BTS experience." required></textarea>
+    <label for="message">Your Message:</label>
+    <textarea id="message" name="message" rows="4" required></textarea>
 
-        <button type="submit">Submit</button>
-      </form>
+    <button type="submit">Submit</button>
 
-      <div id="form-feedback"></div>
+    <!-- Feedback message from JS -->
+    <p id="form-feedback"></p>
+  </form>
     </section>
   </main>
 
