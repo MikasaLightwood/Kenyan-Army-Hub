@@ -71,21 +71,39 @@ if (exists('join-form')) {
   });
 }
 
-// ===== COMMUNITY PAGE =====
+// ===== COMMUNITY PAGE - SCATTERED POSTS =====
 if (exists('posts-container')) {
   const container = document.getElementById('posts-container');
+  container.style.position = 'relative'; // container must be relative for absolute children
+  container.style.height = '800px'; // give some space for scattered posts
+  container.innerHTML = '';
+
   const submissions = JSON.parse(localStorage.getItem('armySubmissions')) || [];
 
-  container.innerHTML = submissions.length
-    ? submissions.map(sub => `
-      <div class="post">
+  if (submissions.length) {
+    submissions.forEach(sub => {
+      const postDiv = document.createElement('div');
+      postDiv.className = 'post-scatter';
+      postDiv.innerHTML = `
         <h4>${sub.name}</h4>
         <p><strong>Favorite Member:</strong> ${sub.favoriteMember}</p>
         <p><strong>ARMY Since:</strong> ${sub.armySince}</p>
         <p>${sub.message}</p>
         <small>${new Date(sub.date).toLocaleString()}</small>
-      </div>`).join('')
-    : "<p>No submissions yet. Be the first to join!</p>";
+      `;
+
+      // Random position inside container
+      const maxTop = container.clientHeight - 150; // prevent overflow
+      const maxLeft = container.clientWidth - 220; 
+      postDiv.style.position = 'absolute';
+      postDiv.style.top = Math.floor(Math.random() * maxTop) + 'px';
+      postDiv.style.left = Math.floor(Math.random() * maxLeft) + 'px';
+
+      container.appendChild(postDiv);
+    });
+  } else {
+    container.innerHTML = "<p>No submissions yet. Be the first to join!</p>";
+  }
 }
 
 // ===== STATIC HOVER EFFECTS =====
