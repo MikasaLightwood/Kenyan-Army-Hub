@@ -33,7 +33,7 @@ Here are some visuals from the project:
 ![Homepage Screenshot](./Images/Screenshot%202025-10-12%20213351.png)  
 *Homepage with featured BTS content*
 
-![Member Profile Screenshot] (./Images/Screenshot%202025-10-12%20213417.png)  
+![Member Profile Screenshot](./Images/Screenshot%202025-10-12%20213417.png)  
 *BTS member profile page*
 
 You can view a live demo at: [https://mikasalightwood.github.io/Kenyan-Army-Hub/]
