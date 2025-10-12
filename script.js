@@ -74,16 +74,41 @@ if (exists('join-form')) {
 // ===== COMMUNITY PAGE - SCATTERED POSTS =====
 if (exists('posts-container')) {
   const container = document.getElementById('posts-container');
-  container.style.position = 'relative'; // container must be relative for absolute children
-  container.style.height = '800px'; // give some space for scattered posts
+  container.style.position = 'relative';
+  container.style.height = '800px';
   container.innerHTML = '';
 
   const submissions = JSON.parse(localStorage.getItem('armySubmissions')) || [];
+  const postWidth = 200;
+  const postHeight = 150;
+  const padding = 20;
 
   if (submissions.length) {
+    // calculate max rows and columns
+    const cols = Math.floor(container.clientWidth / (postWidth + padding));
+    const rows = Math.floor(container.clientHeight / (postHeight + padding));
+
+    // create a grid of possible positions
+    const positions = [];
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        positions.push({ top: r * (postHeight + padding), left: c * (postWidth + padding) });
+      }
+    }
+
     submissions.forEach(sub => {
+      if (positions.length === 0) return; // no more space
+
+      // pick a random available position
+      const index = Math.floor(Math.random() * positions.length);
+      const pos = positions.splice(index, 1)[0];
+
       const postDiv = document.createElement('div');
       postDiv.className = 'post-scatter';
+      postDiv.style.position = 'absolute';
+      postDiv.style.width = postWidth + 'px';
+      postDiv.style.top = pos.top + Math.floor(Math.random() * 20) + 'px'; // small random offset
+      postDiv.style.left = pos.left + Math.floor(Math.random() * 20) + 'px';
       postDiv.innerHTML = `
         <h4>${sub.name}</h4>
         <p><strong>Favorite Member:</strong> ${sub.favoriteMember}</p>
@@ -92,19 +117,13 @@ if (exists('posts-container')) {
         <small>${new Date(sub.date).toLocaleString()}</small>
       `;
 
-      // Random position inside container
-      const maxTop = container.clientHeight - 150; // prevent overflow
-      const maxLeft = container.clientWidth - 220; 
-      postDiv.style.position = 'absolute';
-      postDiv.style.top = Math.floor(Math.random() * maxTop) + 'px';
-      postDiv.style.left = Math.floor(Math.random() * maxLeft) + 'px';
-
       container.appendChild(postDiv);
     });
   } else {
     container.innerHTML = "<p>No submissions yet. Be the first to join!</p>";
   }
 }
+
 
 // ===== STATIC HOVER EFFECTS =====
 if (exists('members')) {

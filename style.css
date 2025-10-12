@@ -462,50 +462,39 @@ footer {
   font-size: 0.95rem;
 }
 
-#post-form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 15px;
-}
-
-#post-form textarea {
-  resize: vertical;
-  min-height: 80px;
+.post-scatter {
+  width: 200px;
+  background-color: #fff;
+  border: 2px solid #6E1E91;
+  border-radius: 12px;
   padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 1rem;
-}
-
-#post-form button {
-  align-self: flex-end;
-  background-color: #6E1E91;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 8px;
-  font-size: 1rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  transition: transform 0.3s, box-shadow 0.3s;
   cursor: pointer;
-  transition: background-color 0.3s ease;
 }
 
-#post-form button:hover {
-  background-color: #32CD32; /* hover green */
+.post-scatter:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
 }
-
+.post-scatter h4 {
+  margin: 0 0 8px 0;
+  color: #6E1E91;
+}
+.post-scatter p {
+  font-size: 0.9rem;
+  color: #555;
+}
 @media screen and (max-width: 600px) {
   #posts-container {
     padding: 10px;
   }
 
-  #post-form button {
+  .post-scatter {
     width: 100%;
   }
 }
 /* End of Community.html CSS */
-
-
 /* ================= JOIN US PAGE ================= */
 
 /* Join Page Background */
