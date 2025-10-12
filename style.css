@@ -20,7 +20,7 @@ h1 {
 
 /* Header & Navigation */
 header {
-  background-color: #D8B6E3; /* Softer purple header */
+  background-color: #9B4F96; /* Softer purple header */
   color: #000; /* Black text */
   padding: 1rem 2rem;
   text-align: center;
@@ -103,7 +103,7 @@ section p {
 
 /* Footer */
 footer {
-  background-color: #D8B6E3; /* Softer purple like header */
+  background-color: #9B4F96; /* Softer purple like header */
   color: #000;
   text-align: center;
   padding: 1rem 2rem;
@@ -150,149 +150,193 @@ footer p {
 }
 /* End of Index.html CSS */
 
-/* General Styles */
+
+/* ================= MEMBERS PAGE ================= */
+
+/* RESET & GLOBAL */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  background-color: #F3E5F5; /* soft lilac */
-  color: #000;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #E6E6FA; /* Lavender background */
+  color: #222;
+  line-height: 1.6;
 }
 
+/* HEADER */
 header {
-  background-color: #E6CFE6; /* slightly darker lilac */
-  padding: 1rem 2rem;
+  background-color: #9B4F96; /* Softer purple header */
+  color: white;
   text-align: center;
-}
-
-header h1 {
-  margin: 0;
-  color: #000;
+  padding: 1rem 0;
 }
 
 nav ul {
   list-style: none;
   display: flex;
   justify-content: center;
-  padding: 0;
-  margin: 0.5rem 0 0 0;
-  gap: 2rem;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  margin-top: 0.5rem;
 }
 
 nav a {
+  color: white;
   text-decoration: none;
-  color: #6E1E91;
-  font-weight: bold;
-  transition: color 0.3s ease;
+  font-weight: 500;
 }
 
-nav a:hover {
-  color: #32CD32; /* green hover */
+nav a.active {
+  text-decoration: underline;
 }
 
-.members-container {
-  display: flex;
-  flex-direction: column;
+/* INTRO SECTION */
+.intro {
+  text-align: center;
+  padding: 2rem 1rem;
+  background-color: none;
+}
+
+.intro h2 {
+  color: #4a0068;
+  margin-bottom: 0.5rem;
+  font-size: 2rem;
+}
+
+.intro p {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* OT7 SECTION */
+.ot7 {
+  text-align: center;
+  margin: 2rem auto;
+  padding: 2rem 1rem;
+  max-width: 900px;
+  border-radius: 12px;
+  background-color: #6E1E91;
+  color: white;
+}
+
+.ot7 img {
+  width: 100%;
+  max-height: 450px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+}
+
+/* MEMBERS GRID */
+.members-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
   gap: 2rem;
   padding: 2rem;
+  max-width: 1200px;
+  margin: auto;
 }
 
+/* MEMBER CARD */
 .member-card {
-  display: flex;
-  flex-direction: row;
-  background-color: var(--bg-color, #f8f4fc);
-  border-radius: 10px;
+  background-color: #fff;
+  border-radius: 14px;
   overflow: hidden;
-  box-shadow: 0 4px 8px rgba(110, 30, 145, 0.2);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  text-align: center;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .member-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(110, 30, 145, 0.4);
-}
-
-/* V specific hover */
-.member-card.V:hover {
-  background-color: #2E8B57; /* darker green */
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  transform: translateY(-6px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.15);
 }
 
 .member-card img {
-  width: 150px;
-  height: auto;
+  width: 100%;
+  height: 450px;
   object-fit: cover;
+  object-position: top center;
 }
 
-.member-bio {
-  padding: 1rem 1.5rem;
-  flex: 1;
+/* INFO SECTION */
+.member-info {
+  padding: 1.2rem 1rem 1.6rem;
+  color: white;
+  min-height: 180px;
 }
 
-.member-bio h3 {
-  margin-top: 0;
-  margin-bottom: 0.5rem;
+.member-info h3 {
+  margin-bottom: 0.6rem;
 }
 
-.member-bio p {
+.member-info p {
   font-size: 0.95rem;
-  margin-bottom: 0.5rem;
 }
 
-.member-bio a {
+.read-more {
+  display: inline-block;
+  margin-top: 0.8rem;
   color: #6E1E91;
   text-decoration: none;
-  font-weight: bold;
+  font-weight: 600;
+  transition: color 0.3s ease;
 }
 
-.member-bio a:hover {
-  color: #32CD32; /* green hover */
+.read-more:hover {
+  color: white;
 }
 
-/* Jungkook card */
-.member-card.Jk {
-  --bg-color: #8A2BE2; /* slightly different purple */
+/* COLORS */
+.rm .member-info { background-color: #1E3A8A; }
+.jin .member-info { background-color: #FFC0CB; color: black; }
+.suga .member-info { background-color: #000000; }
+.jhope .member-info { background-color: #E11D48; }
+.jimin .member-info { background-color: #FACC15; color: black; }
+.v .member-info { background-color: #14532D; }
+.jk .member-info { background-color: #8a2be2; }
+
+/* JK CENTER */
+.jk {
+  grid-column: 1 / -1;
+  max-width: 420px;
+  margin: 0 auto;
 }
 
+/* FOOTER */
 footer {
-  background-color: #E6CFE6;
+  background-color: #9B4F96; /* Softer purple like header */
+  color: white;
   text-align: center;
-  padding: 1rem;
-  margin-top: 2rem;
-  box-shadow: inset 0 2px 5px rgba(110,30,145,0.2);
+  padding: 1rem 0;
+  font-size: 0.9rem;
 }
 
-/* Responsive */
-@media screen and (max-width: 768px) {
-  .member-card {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-
+/* RESPONSIVE */
+@media (max-width: 768px) {
   .member-card img {
-    width: 100%;
-    max-width: 250px;
+    height: 380px;
   }
-
-  .member-bio {
-    padding: 1rem;
+  .intro h2 {
+    font-size: 1.7rem;
   }
 }
-@media screen and (max-width: 480px) {
-  nav ul {
-    flex-direction: column;
-    gap: 1rem;
+@media (max-width: 480px) {
+  .member-card img {
+    height: 320px;
   }
-
-  .member-bio p {
-    font-size: 0.9rem;
+  .intro h2 {
+    font-size: 1.5rem;
   }
 }
-
 /* End of Members.html CSS */
 
-/* Shows Page - Video Cards */
+
+/* ================= SHOWS PAGE ================= */
 .shows-container {
   display: flex;
   flex-wrap: wrap;
@@ -325,13 +369,13 @@ footer {
 
 .show-info {
   padding: 10px 15px;
-  background-color: #fff;
+  background-color: lavender;
 }
 
 .show-info h3 {
   margin: 0 0 8px 0;
   font-size: 1.2rem;
-  color: #6E1E91; /* your BTS purple */
+  color: #6E1E91; /* BTS purple */
 }
 
 .show-info p {
@@ -350,12 +394,14 @@ footer {
 .show-info a:hover {
   color: #32CD32; /* hover green */
 }
+
 @media screen and (max-width: 768px) {
   .show-card {
     width: 100%;
     max-width: 400px;
   }
 }
+
 @media screen and (max-width: 480px) {
   .show-info h3 {
     font-size: 1rem;
@@ -365,7 +411,10 @@ footer {
     font-size: 0.9rem;
   }
 }
-/* Community Page */
+/* End of Shows Page CSS */
+
+
+/* ================= COMMUNITY PAGE ================= */
 #community {
   max-width: 900px;
   margin: 20px auto;
@@ -389,14 +438,14 @@ footer {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  background-color: #f5e6fa; /* soft lilac for posts background */
+  background-color: #edc2fb; /* soft lilac */
   padding: 15px;
   border-radius: 12px;
   min-height: 100px;
 }
 
 .post {
-  background-color: #fff;
+  background-color: #f3e6fa; /* soft lilac for posts background */
   padding: 10px 15px;
   border-left: 5px solid #6E1E91;
   border-radius: 8px;
@@ -412,6 +461,7 @@ footer {
   margin: 0;
   font-size: 0.95rem;
 }
+
 #post-form {
   display: flex;
   flex-direction: column;
@@ -427,6 +477,7 @@ footer {
   border-radius: 8px;
   font-size: 1rem;
 }
+
 #post-form button {
   align-self: flex-end;
   background-color: #6E1E91;
@@ -438,9 +489,11 @@ footer {
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
+
 #post-form button:hover {
   background-color: #32CD32; /* hover green */
 }
+
 @media screen and (max-width: 600px) {
   #posts-container {
     padding: 10px;
@@ -451,19 +504,21 @@ footer {
   }
 }
 /* End of Community.html CSS */
-/* Join Us Page */
+
+
+/* ================= JOIN US PAGE ================= */
 
 /* Join Page Background */
 body#join-body {
   background: url('./Images/1.jpg') no-repeat center center fixed;
   background-size: cover;
   color: #fff; /* default text color for contrast */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
-    line-height: 1.6;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .text-box {
@@ -484,12 +539,14 @@ body#join-body {
   color: #000;
   font-size: 1rem;
 }
+
 header {
   background-color: rgba(230, 207, 230, 0.9); /* semi-transparent lilac */
   padding: 1rem 2rem;
   text-align: center;
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
+
 /* Join Page Form */
 #join {
   max-width: 600px;
@@ -555,6 +612,7 @@ header {
   font-weight: bold;
   color: #32CD32; /* green for success feedback */
 }
+
 @media screen and (max-width: 600px) {
   #join-form {
     padding: 15px;
