@@ -462,37 +462,46 @@ footer {
   font-size: 0.95rem;
 }
 
+/* Scattered Community Posts */
+/* Scattered Community Posts */
 .post-scatter {
-  width: 200px;
-  background-color: #fff;
-  border: 2px solid #6E1E91;
+  background-color: rgba(245, 230, 250, 0.9); /* semi-transparent lilac */
+  border: 2px solid #6E1E91; /* BTS purple border */
   border-radius: 12px;
   padding: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  transition: transform 0.3s, box-shadow 0.3s;
-  cursor: pointer;
+  width: 200px;
+  min-height: 150px;  /* minimum height */
+  height: auto;        /* allow posts to grow */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  overflow: visible;   /* show overflowing content */
+  font-size: 0.9rem;
+  color: #000;
+  position: absolute;  /* positioning handled by JS */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.post-scatter h4 {
+  margin: 0 0 5px 0;
+  font-size: 1rem;
+  color: #6E1E91;
+}
+
+.post-scatter p {
+  margin: 2px 0;
+  line-height: 1.2;
+}
+
+.post-scatter small {
+  display: block;
+  margin-top: 5px;
+  font-size: 0.75rem;
+  color: #333;
 }
 
 .post-scatter:hover {
   transform: scale(1.05);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-}
-.post-scatter h4 {
-  margin: 0 0 8px 0;
-  color: #6E1E91;
-}
-.post-scatter p {
-  font-size: 0.9rem;
-  color: #555;
-}
-@media screen and (max-width: 600px) {
-  #posts-container {
-    padding: 10px;
-  }
-
-  .post-scatter {
-    width: 100%;
-  }
+  box-shadow: 0 6px 15px rgba(110, 30, 145, 0.5);
+  z-index: 10;
 }
 /* End of Community.html CSS */
 /* ================= JOIN US PAGE ================= */

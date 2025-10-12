@@ -80,35 +80,12 @@ if (exists('posts-container')) {
 
   const submissions = JSON.parse(localStorage.getItem('armySubmissions')) || [];
   const postWidth = 200;
-  const postHeight = 150;
   const padding = 20;
 
   if (submissions.length) {
-    // calculate max rows and columns
-    const cols = Math.floor(container.clientWidth / (postWidth + padding));
-    const rows = Math.floor(container.clientHeight / (postHeight + padding));
-
-    // create a grid of possible positions
-    const positions = [];
-    for (let r = 0; r < rows; r++) {
-      for (let c = 0; c < cols; c++) {
-        positions.push({ top: r * (postHeight + padding), left: c * (postWidth + padding) });
-      }
-    }
-
     submissions.forEach(sub => {
-      if (positions.length === 0) return; // no more space
-
-      // pick a random available position
-      const index = Math.floor(Math.random() * positions.length);
-      const pos = positions.splice(index, 1)[0];
-
       const postDiv = document.createElement('div');
       postDiv.className = 'post-scatter';
-      postDiv.style.position = 'absolute';
-      postDiv.style.width = postWidth + 'px';
-      postDiv.style.top = pos.top + Math.floor(Math.random() * 20) + 'px'; // small random offset
-      postDiv.style.left = pos.left + Math.floor(Math.random() * 20) + 'px';
       postDiv.innerHTML = `
         <h4>${sub.name}</h4>
         <p><strong>Favorite Member:</strong> ${sub.favoriteMember}</p>
@@ -116,14 +93,19 @@ if (exists('posts-container')) {
         <p>${sub.message}</p>
         <small>${new Date(sub.date).toLocaleString()}</small>
       `;
-
       container.appendChild(postDiv);
+
+      // Scatter positioning
+      const maxTop = container.clientHeight - postDiv.offsetHeight;
+      const maxLeft = container.clientWidth - postWidth;
+
+      postDiv.style.top = Math.floor(Math.random() * maxTop) + 'px';
+      postDiv.style.left = Math.floor(Math.random() * maxLeft) + 'px';
     });
   } else {
     container.innerHTML = "<p>No submissions yet. Be the first to join!</p>";
   }
 }
-
 
 // ===== STATIC HOVER EFFECTS =====
 if (exists('members')) {
