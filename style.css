@@ -278,6 +278,18 @@ nav a.active {
   font-size: 0.95rem;
 }
 
+/* ================= OT7 READ MORE LINK ================= */
+.ot7 a.read-more {
+  color: #cd95e5; /* BTS-inspired purple, visible on light/dark backgrounds */
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.ot7 a.read-more:hover {
+  color: #32CD32; /* lime green on hover */
+}
+
 .read-more {
   display: inline-block;
   margin-top: 0.8rem;
@@ -435,13 +447,13 @@ footer {
 }
 
 #posts-container {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  background-color: #edc2fb; /* soft lilac */
-  padding: 15px;
-  border-radius: 12px;
-  min-height: 100px;
+  position: relative;
+  width: 100vw; /* full viewport width */
+  height: 80vh; /* adjust for visible vertical space */
+  background-color: #edc2fb;
+  padding: 30px;
+  margin: 0; /* span full width */
+  overflow: visible; /* allow posts to extend outside container */
 }
 
 .post {
@@ -461,22 +473,24 @@ footer {
   margin: 0;
   font-size: 0.95rem;
 }
-
-/* Scattered Community Posts */
+.post small {
+  display: block;
+  margin-top: 5px;
+  font-size: 0.75rem;
+  color: #666;
+}
 /* Scattered Community Posts */
 .post-scatter {
-  background-color: rgba(245, 230, 250, 0.9); /* semi-transparent lilac */
-  border: 2px solid #6E1E91; /* BTS purple border */
+  background-color: rgba(245, 230, 250, 0.9);
+  border: 2px solid #6E1E91;
   border-radius: 12px;
   padding: 10px;
   width: 200px;
-  min-height: 150px;  /* minimum height */
-  height: auto;        /* allow posts to grow */
+  min-height: 150px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  overflow: visible;   /* show overflowing content */
   font-size: 0.9rem;
   color: #000;
-  position: absolute;  /* positioning handled by JS */
+  position: absolute; /* so we can scatter them freely */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 

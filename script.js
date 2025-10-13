@@ -1,145 +1,151 @@
-// Common helper
-const exists = id => document.getElementById(id);
-
-// ===== INITIALIZE PRE-FILLED COMMUNITY POSTS =====
-const initialPosts = [
-  {
-    name: "Alice",
-    favoriteMember: "Jimin",
-    armySince: "2018",
-    message: "I’ve been an ARMY since high school! Jimin’s smile always makes my day 💜",
-    date: new Date().toISOString()
-  },
-  {
-    name: "Brian",
-    favoriteMember: "RM",
-    armySince: "2016",
-    message: "Namjoon’s leadership inspires me. Proud to be ARMY!",
-    date: new Date().toISOString()
-  },
-  {
-    name: "Cathy",
-    favoriteMember: "OT7",
-    armySince: "2017",
-    message: "Can’t pick one, they’re all amazing! Bangtan forever.",
-    date: new Date().toISOString()
-  }
-];
-
-// Check localStorage, set initial posts if none exist
-if (!localStorage.getItem('armySubmissions')) {
-  localStorage.setItem('armySubmissions', JSON.stringify(initialPosts));
-}
-
-// ===== JOIN FORM =====
-if (exists('join-form')) {
-  const form = document.getElementById('join-form');
-  const feedback = document.getElementById('form-feedback');
-
-  const validMembers = {
-    RM: ["rm", "namjoon"],
-    Jin: ["jin", "seokjin", "worldwide handsome"],
-    Suga: ["suga", "yoongi", "agust d"],
-    "J-Hope": ["j-hope", "hoseok", "hobi"],
-    Jimin: ["jimin", "chimchim"],
-    V: ["v", "tae", "taehyung"],
-    Jungkook: ["jungkook", "kookie", "jeon jungkook"],
-    OT7: ["ot7", "bangtan", "bts"]
+// ================= SHOWS PAGE: ADD YOUTUBE LINKS =================
+const showCards = document.querySelectorAll(".show-card");
+if (showCards.length) {
+  const youtubeLinks = {
+    "Burn the Stage": "https://www.youtube.com/watch?v=g_6FoBgps9Y",
+    "Break the Silence": "https://www.youtube.com/watch?v=QfctZceL6mw",
+    "Bring the Soul": "https://www.youtube.com/watch?v=AwrClxIhsYc",
+    "BTS World": "https://www.youtube.com/watch?v=Sztf6ppbqQE"
   };
 
-  form.addEventListener('submit', e => {
-    e.preventDefault();
-    const name = document.getElementById('name').value.trim();
-    const memberInput = document.getElementById('favorite-member').value.trim().toLowerCase();
-    const armySince = document.getElementById('army-since').value;
-    const message = document.getElementById('message').value.trim();
+  showCards.forEach(card => {
+    const titleEl = card.querySelector("h3");
+    const infoEl = card.querySelector(".show-info");
 
-    const memberMatched = Object.keys(validMembers).find(m => validMembers[m].includes(memberInput));
-    if (!memberMatched) {
-      feedback.style.color = "#FF0000";
-      feedback.textContent = "Enter a valid BTS member or OT7 nickname.";
+    if (titleEl && infoEl) {
+      const title = titleEl.textContent.trim();
+      const ytLink = youtubeLinks[title];
+      if (ytLink) {
+        const a = document.createElement("a");
+        a.href = ytLink;
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+        a.textContent = "Watch on YouTube";
+        a.style.display = "block";
+        a.style.marginTop = "8px";
+        infoEl.appendChild(a);
+      }
+    }
+  });
+}
+
+// ================= JOIN FORM LOGIC =================
+const joinForm = document.getElementById("join-form");
+const formFeedback = document.getElementById("form-feedback");
+
+if (joinForm) {
+  joinForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(joinForm);
+    const name = formData.get("name")?.trim();
+    const favoriteMember = formData.get("favorite-member")?.trim();
+    const armySince = formData.get("army-since")?.trim();
+    const message = formData.get("message")?.trim();
+
+    if (!name || !favoriteMember || !armySince || !message) {
+      formFeedback.textContent = "Please fill all fields!";
       return;
     }
 
-    const submissions = JSON.parse(localStorage.getItem('armySubmissions')) || [];
-    submissions.unshift({ name, favoriteMember: memberMatched, armySince, message, date: new Date().toISOString() });
-    localStorage.setItem('armySubmissions', JSON.stringify(submissions));
+    // Save to members
+    const members = JSON.parse(localStorage.getItem("members")) || [];
+    members.push({ name, favoriteMember, armySince, message, date: new Date().toISOString() });
+    localStorage.setItem("members", JSON.stringify(members));
 
-    feedback.style.color = "#32CD32";
-    feedback.textContent = "Thanks! Your message has been saved.";
-    form.reset();
+    // Also save as a community post
+    const savedPosts = JSON.parse(localStorage.getItem("posts")) || [];
+    const newPost = {
+      id: Date.now(),
+      username: name,
+      content: `${message} 💜 Favorite Member: ${favoriteMember}`,
+      date: new Date().toISOString()
+    };
+    savedPosts.push(newPost);
+    localStorage.setItem("posts", JSON.stringify(savedPosts));
+
+    // Render immediately
+    createPostElement(newPost);
+
+    joinForm.reset();
+    formFeedback.textContent = "You have successfully joined!";
   });
 }
 
-// ===== COMMUNITY PAGE - SCATTERED POSTS =====
-if (exists('posts-container')) {
-  const container = document.getElementById('posts-container');
-  container.style.position = 'relative';
-  container.style.height = '800px';
-  container.innerHTML = '';
+// ================= COMMUNITY POSTS LOGIC =================
+const postsContainer = document.getElementById("posts-container");
+let savedPosts = JSON.parse(localStorage.getItem("posts")) || [];
 
-  const submissions = JSON.parse(localStorage.getItem('armySubmissions')) || [];
-  const postWidth = 200;
-  const padding = 20;
-
-  if (submissions.length) {
-    submissions.forEach(sub => {
-      const postDiv = document.createElement('div');
-      postDiv.className = 'post-scatter';
-      postDiv.innerHTML = `
-        <h4>${sub.name}</h4>
-        <p><strong>Favorite Member:</strong> ${sub.favoriteMember}</p>
-        <p><strong>ARMY Since:</strong> ${sub.armySince}</p>
-        <p>${sub.message}</p>
-        <small>${new Date(sub.date).toLocaleString()}</small>
-      `;
-      container.appendChild(postDiv);
-
-      // Scatter positioning
-      const maxTop = container.clientHeight - postDiv.offsetHeight;
-      const maxLeft = container.clientWidth - postWidth;
-
-      postDiv.style.top = Math.floor(Math.random() * maxTop) + 'px';
-      postDiv.style.left = Math.floor(Math.random() * maxLeft) + 'px';
-    });
-  } else {
-    container.innerHTML = "<p>No submissions yet. Be the first to join!</p>";
-  }
+// Add sample posts if none exist
+if (!savedPosts || savedPosts.length === 0) {
+  savedPosts = [
+    { id: 1, username: "Stacy", content: "BTS forever 💜", date: new Date().toISOString() },
+    { id: 2, username: "Alex", content: "Can't wait for their next album!", date: new Date().toISOString() },
+    { id: 3, username: "Jordan", content: "Love all the BTS content!", date: new Date().toISOString() },
+    { id: 4, username: "Mia", content: "Army life is the best life!", date: new Date().toISOString() },
+    { id: 5, username: "Leo", content: "Watching every BTS documentary twice 😎", date: new Date().toISOString() }
+  ];
+  localStorage.setItem("posts", JSON.stringify(savedPosts));
 }
 
-// ===== STATIC HOVER EFFECTS =====
-if (exists('members')) {
-  document.querySelectorAll('.member-card').forEach(card => {
-    card.addEventListener('mouseenter', () => card.style.boxShadow = '0 4px 15px rgba(0,0,0,0.2)');
-    card.addEventListener('mouseleave', () => card.style.boxShadow = 'none');
+// Render posts
+savedPosts.forEach(createPostElement);
+
+const postForm = document.getElementById("post-form");
+if (postForm) {
+  postForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(postForm);
+    const username = formData.get("username")?.trim();
+    const content = formData.get("content")?.trim();
+
+    if (!username || !content) return;
+
+    const newPost = { id: Date.now(), username, content, date: new Date().toISOString() };
+    savedPosts.push(newPost);
+    localStorage.setItem("posts", JSON.stringify(savedPosts));
+
+    createPostElement(newPost);
+    postForm.reset();
   });
 }
 
-if (exists('shows')) {
-  document.querySelectorAll('.show-card').forEach(card => {
-    card.addEventListener('mouseenter', () => card.style.transform = 'scale(1.02)');
-    card.addEventListener('mouseleave', () => card.style.transform = 'scale(1)');
+// ================= CREATE POST ELEMENT =================
+function createPostElement(post) {
+  const postEl = document.createElement("div");
+  postEl.classList.add("post-scatter");
+  postEl.innerHTML = `
+    <h4>${post.username}</h4>
+    <p>${post.content}</p>
+    <small>${new Date(post.date).toLocaleString()}</small>
+  `;
+  postEl.style.position = "absolute";
+  postEl.style.top = `${Math.random() * 400}px`;
+  postEl.style.left = `${Math.random() * (window.innerWidth - 220)}px`;
+  postsContainer?.appendChild(postEl);
+}
+
+// ================= SCATTER POSTS ON LOAD =================
+window.addEventListener("load", () => {
+  document.querySelectorAll(".post-scatter").forEach((postEl) => {
+    postEl.style.top = `${Math.random() * 400}px`;
+    postEl.style.left = `${Math.random() * (window.innerWidth - 220)}px`;
+  });
+});
+
+// ================= RESPONSIVE NAVIGATION =================
+const navToggle = document.getElementById("nav-toggle");
+const navLinks = document.getElementById("nav-links");    
+if (navToggle) {
+  navToggle.addEventListener("click", () => navLinks.classList.toggle("active"));
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 768) navLinks.classList.remove("active");
   });
 }
 
-// ===== INDEX PAGE =====
-if (exists('about')) {
-  const about = document.getElementById('about');
-  const greeting = document.createElement('p');
-  greeting.textContent = "Welcome ARMY! Connect, share, and celebrate BTS with us.";
-  about.appendChild(greeting);
-}
-if (exists('photo-gallery')) {
-  const gallery = document.getElementById('photo-gallery');
-  const caption = document.createElement('p');  
-  caption.textContent = "Relive the magic of BTS concerts and ARMY moments!";
-  gallery.appendChild(caption);
-}
-
-// ===== JOIN & BODY COLORS =====
-if (exists('join-body')) document.getElementById('join-body').style.backgroundColor = '#FFF0F5';
-if (exists('index-body')) document.getElementById('index-body').style.backgroundColor = '#F8F0FF';
-if (exists('members-body')) document.getElementById('members-body').style.backgroundColor = '#F0FFF0';
-if (exists('shows-body')) document.getElementById('shows-body').style.backgroundColor = '#FFF5E6';
-if (exists('community-body')) document.getElementById('community-body').style.backgroundColor = '#F0FFFF';
-if (exists('about-body')) document.getElementById('about-body').style.backgroundColor = '#FFFFF0';
+// ================= READ MORE LINKS =================
+document.querySelectorAll('.read-more').forEach(link => {
+  link.setAttribute('target', '_blank');
+  link.setAttribute('rel', 'noopener noreferrer');
+});
