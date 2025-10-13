@@ -448,12 +448,13 @@ footer {
 
 #posts-container {
   position: relative;
-  width: 100vw; /* full viewport width */
-  height: 80vh; /* adjust for visible vertical space */
+  width: 100vw;          /* full viewport width */
+  height: 80vh;          /* adjust for visible vertical space */
   background-color: #edc2fb;
   padding: 30px;
-  margin: 0; /* span full width */
-  overflow: visible; /* allow posts to extend outside container */
+  margin: 0;             /* start at the very left */
+  overflow: visible;     /* allow posts to extend outside container */
+  border-radius: 15px;   /* slightly rounded edges */
 }
 
 .post {
