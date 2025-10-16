@@ -13,6 +13,46 @@ if (greetingEl) {
 }
 // ================= HOME PAGE: DYNAMIC GREETING END =================
 
+// ================= MEMBERS PAGE LOGIC =================
+const memberCards = document.querySelectorAll(".member-card");
+
+if (memberCards.length) {
+  console.log("Members page loaded: BTS member cards found.");
+
+  // ================= FUN FACTS =================
+  const funFacts = [
+    "RM learned English by watching 'Friends'!",
+    "Jin studied acting before joining BigHit.",
+    "SUGA originally wanted to be a producer.",
+    "J-Hope was part of an underground dance crew.",
+    "Jimin studied contemporary dance in Busan.",
+    "V was the hidden member before debut!",
+    "Jungkook almost joined another company before BigHit!"
+  ];
+
+  const factContainer = document.createElement("section");
+  factContainer.className = "fun-facts";
+  factContainer.style.textAlign = "center";
+  factContainer.style.padding = "1.5rem 1rem";
+  factContainer.style.fontWeight = "600";
+  factContainer.style.color = "#6E1E91";
+  factContainer.style.fontSize = "1.1rem";
+  factContainer.textContent = `💜 Fun Fact: ${funFacts[0]}`;
+
+  // Insert before footer
+  const footer = document.querySelector("footer");
+  if (footer) {
+    footer.parentNode.insertBefore(factContainer, footer);
+  }
+
+  // Rotate facts every 10 seconds
+  let factIndex = 1;
+  setInterval(() => {
+    factContainer.textContent = `💜 Fun Fact: ${funFacts[factIndex]}`;
+    factIndex = (factIndex + 1) % funFacts.length;
+  }, 10000);
+}
+
 
 // ================= SHOWS PAGE: ADD YOUTUBE LINKS =================
 const showCards = document.querySelectorAll(".show-card");
