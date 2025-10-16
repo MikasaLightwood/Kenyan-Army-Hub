@@ -86,9 +86,6 @@ if (showCards.length) {
 }
 
 // ================= JOIN FORM LOGIC =================
-const joinForm = document.getElementById("join-form");
-const formFeedback = document.getElementById("form-feedback");
-
 if (joinForm) {
   joinForm.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -101,15 +98,14 @@ if (joinForm) {
 
     if (!name || !favoriteMember || !armySince || !message) {
       formFeedback.textContent = "Please fill all fields!";
+      formFeedback.style.color = "red";
       return;
     }
 
-    // Save to members
     const members = JSON.parse(localStorage.getItem("members")) || [];
     members.push({ name, favoriteMember, armySince, message, date: new Date().toISOString() });
     localStorage.setItem("members", JSON.stringify(members));
 
-    // Also save as a community post
     const savedPosts = JSON.parse(localStorage.getItem("posts")) || [];
     const newPost = {
       id: Date.now(),
@@ -120,95 +116,69 @@ if (joinForm) {
     savedPosts.push(newPost);
     localStorage.setItem("posts", JSON.stringify(savedPosts));
 
-    // Render immediately
+    formFeedback.textContent = `Welcome, ${name}! 💜 You have successfully joined Kenyan Army Hub Community.`;
+    formFeedback.style.color = "green";
+
     joinForm.reset();
-    formFeedback.textContent = "You have successfully joined!";
   });
 }
 
 // ================= COMMUNITY POSTS LOGIC =================
 const postsContainer = document.getElementById("posts-container");
-let savedPosts = JSON.parse(localStorage.getItem("posts")) || [];
+if (postsContainer) {
+  let savedPosts = JSON.parse(localStorage.getItem("posts")) || [];
 
-// Add sample posts if none exist
-if (!savedPosts || savedPosts.length === 0) {
-  savedPosts = [
-    { id: 1, username: "Stacy", content: "BTS forever 💜", date: new Date().toISOString() },
-    { id: 2, username: "Alex", content: "Can't wait for their next album!", date: new Date().toISOString() },
-    { id: 3, username: "Jordan", content: "Love all the BTS content!", date: new Date().toISOString() },
-    { id: 4, username: "Mia", content: "Army life is the best life!", date: new Date().toISOString() },
-    { id: 5, username: "Leo", content: "Watching every BTS documentary twice 😎", date: new Date().toISOString() }
-  ];
-  localStorage.setItem("posts", JSON.stringify(savedPosts));
-}
-
-// Render posts
-savedPosts.forEach(createPostElement);
-
-const postForm = document.getElementById("post-form");
-if (postForm) {
-  postForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    const formData = new FormData(postForm);
-    const username = formData.get("username")?.trim();
-    const content = formData.get("content")?.trim();
-
-    if (!username || !content) return;
-
-    const newPost = { id: Date.now(), username, content, date: new Date().toISOString() };
-    savedPosts.push(newPost);
+  // Add sample posts if none exist
+  if (!savedPosts || savedPosts.length === 0) {
+    savedPosts = [
+      { id: 1, username: "Stacy", content: "BTS forever 💜", date: new Date().toISOString() },
+      { id: 2, username: "Alex", content: "Can't wait for their next album!", date: new Date().toISOString() },
+      { id: 3, username: "Jordan", content: "Love all the BTS content!", date: new Date().toISOString() },
+      { id: 4, username: "Mia", content: "Army life is the best life!", date: new Date().toISOString() },
+      { id: 5, username: "Leo", content: "Watching every BTS documentary twice 😎", date: new Date().toISOString() }
+    ];
     localStorage.setItem("posts", JSON.stringify(savedPosts));
+  }
 
-    createPostElement(newPost);
-    postForm.reset();
-  });
+  // Render posts (newest first)
+  savedPosts.reverse().forEach(createPostElement);
+
+  const postForm = document.getElementById("post-form");
+  if (postForm) {
+    postForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(postForm);
+      const username = formData.get("username")?.trim();
+      const content = formData.get("content")?.trim();
+
+      if (!username || !content) return;
+
+      const newPost = { id: Date.now(), username, content, date: new Date().toISOString() };
+      savedPosts.push(newPost);
+      localStorage.setItem("posts", JSON.stringify(savedPosts));
+
+      createPostElement(newPost);
+      postForm.reset();
+    });
+  }
+
+  // ================= RE-SCATTER ON LOAD & RESIZE =================
+  function scatterPosts() {
+    const containerWidth = postsContainer.offsetWidth;
+    const containerHeight = postsContainer.offsetHeight;
+    const maxLeft = Math.max(0, containerWidth - 220 - 20);
+    const maxTop = Math.max(0, containerHeight - 150 - 20);
+
+    document.querySelectorAll(".post-scatter").forEach(postEl => {
+      postEl.style.left = `${Math.random() * maxLeft}px`;
+      postEl.style.top = `${Math.random() * maxTop}px`;
+    });
+  }
+
+  window.addEventListener("load", scatterPosts);
+  window.addEventListener("resize", scatterPosts);
 }
-
-// ================= CREATE POST ELEMENT =================
-function createPostElement(post) {
-  const postEl = document.createElement("div");
-  postEl.classList.add("post-scatter");
-  postEl.innerHTML = `
-    <h4>${post.username}</h4>
-    <p>${post.content}</p>
-    <small>${new Date(post.date).toLocaleString()}</small>
-  `;
-
-  // Get container dimensions dynamically
-  const containerWidth = postsContainer.offsetWidth;
-  const containerHeight = postsContainer.offsetHeight;
-
-  const postWidth = 220;
-  const postHeight = 150;
-
-  // Make sure posts are fully visible inside container
-  const maxLeft = Math.max(0, containerWidth - postWidth - 20);
-  const maxTop = Math.max(0, containerHeight - postHeight - 20);
-
-  postEl.style.position = "absolute";
-  postEl.style.left = `${Math.random() * maxLeft}px`;
-  postEl.style.top = `${Math.random() * maxTop}px`;
-
-  postsContainer.appendChild(postEl);
-}
-
-// ================= RE-SCATTER ON LOAD & RESIZE =================
-function scatterPosts() {
-  const containerWidth = postsContainer.offsetWidth;
-  const containerHeight = postsContainer.offsetHeight;
-  const maxLeft = Math.max(0, containerWidth - 220 - 20);
-  const maxTop = Math.max(0, containerHeight - 150 - 20);
-
-  document.querySelectorAll(".post-scatter").forEach(postEl => {
-    postEl.style.left = `${Math.random() * maxLeft}px`;
-    postEl.style.top = `${Math.random() * maxTop}px`;
-  });
-}
-
-window.addEventListener("load", scatterPosts);
-window.addEventListener("resize", scatterPosts);
-
 
 // ================= RESPONSIVE NAVIGATION =================
 const navToggle = document.getElementById("nav-toggle");
