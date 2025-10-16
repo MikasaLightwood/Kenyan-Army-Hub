@@ -1,3 +1,6 @@
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("Document loaded and parsed.");
+
 // ================= HOME PAGE: DYNAMIC GREETING START =================
 const greetingEl = document.getElementById("greeting");
 if (greetingEl) {
@@ -86,6 +89,8 @@ if (showCards.length) {
 }
 
 // ================= JOIN FORM LOGIC =================
+const joinForm = document.getElementById("join-form");
+const formFeedback = document.getElementById("form-feedback");
 if (joinForm) {
   joinForm.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -121,6 +126,34 @@ if (joinForm) {
 
     joinForm.reset();
   });
+}
+function createPostElement(post) {
+  const postEl = document.createElement("div");
+  postEl.className = "post-scatter";  
+  postEl.style.position = "absolute";
+  postEl.style.width = "220px";
+  postEl.style.padding = "10px";  
+  postEl.style.backgroundColor = "rgba(255, 255, 255, 0.9)";
+  postEl.style.border = "1px solid #ccc";
+  postEl.style.borderRadius = "8px";
+  postEl.style.boxShadow = "0 2px 6px rgba(0,0,0,0.1)";
+  postEl.style.transition = "transform 0.3s";
+  postEl.style.cursor = "pointer";  
+  postEl.innerHTML = `
+    <strong>${post.username}</strong> <br>
+    <small style="color: #555;">${new Date(post.date).toLocaleDateString()}</small>
+    <p style="margin-top: 8px;">${post.content}</p>
+  `;    
+  postEl.addEventListener("mouseenter", () => {
+    postEl.style.transform = "scale(1.05)";
+    postEl.style.zIndex = "10";
+  });
+  postEl.addEventListener("mouseleave", () => {
+    postEl.style.transform = "scale(1)";
+    postEl.style.zIndex = "1";
+  }); 
+  postsContainer.appendChild(postEl);
+  scatterPosts(); // Scatter immediately after adding
 }
 
 // ================= COMMUNITY POSTS LOGIC =================
@@ -195,3 +228,6 @@ document.querySelectorAll('.read-more').forEach(link => {
   link.setAttribute('target', '_blank');
   link.setAttribute('rel', 'noopener noreferrer');
 });
+
+}); // end DOMContentLoaded
+
