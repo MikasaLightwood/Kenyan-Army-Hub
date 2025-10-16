@@ -1,3 +1,19 @@
+// ================= HOME PAGE: DYNAMIC GREETING START =================
+const greetingEl = document.getElementById("greeting");
+if (greetingEl) {
+  const hour = new Date().getHours();
+  let greetingText = "Welcome to the BTS ARMY Hub 💜";
+
+  if (hour < 12) greetingText = "Good morning, ARMY 💜Effort makes you. You will regret someday if you don't do your best now.- BTS Jungkook";
+  else if (hour < 18) greetingText = "Good afternoon, ARMY 💜 If the plan doesn't work, change the plan, but never the Goal. - BTS Jin";
+  else greetingText = "Good evening, ARMY 💜 Don't be trapped in someone else's dream. - BTS V";
+
+  greetingEl.textContent = greetingText;
+  console.log("Dynamic greeting displayed:", greetingText);
+}
+// ================= HOME PAGE: DYNAMIC GREETING END =================
+
+
 // ================= SHOWS PAGE: ADD YOUTUBE LINKS =================
 const showCards = document.querySelectorAll(".show-card");
 if (showCards.length) {
