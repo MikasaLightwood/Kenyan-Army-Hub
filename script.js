@@ -176,19 +176,41 @@ function createPostElement(post) {
     <p>${post.content}</p>
     <small>${new Date(post.date).toLocaleString()}</small>
   `;
+
+  // Get container dimensions dynamically
+  const containerWidth = postsContainer.offsetWidth;
+  const containerHeight = postsContainer.offsetHeight;
+
+  const postWidth = 220;
+  const postHeight = 150;
+
+  // Make sure posts are fully visible inside container
+  const maxLeft = Math.max(0, containerWidth - postWidth - 20);
+  const maxTop = Math.max(0, containerHeight - postHeight - 20);
+
   postEl.style.position = "absolute";
-  postEl.style.top = `${Math.random() * 400}px`;
-  postEl.style.left = `${Math.random() * (window.innerWidth - 220)}px`;
-  postsContainer?.appendChild(postEl);
+  postEl.style.left = `${Math.random() * maxLeft}px`;
+  postEl.style.top = `${Math.random() * maxTop}px`;
+
+  postsContainer.appendChild(postEl);
 }
 
-// ================= SCATTER POSTS ON LOAD =================
-window.addEventListener("load", () => {
-  document.querySelectorAll(".post-scatter").forEach((postEl) => {
-    postEl.style.top = `${Math.random() * 400}px`;
-    postEl.style.left = `${Math.random() * (window.innerWidth - 220)}px`;
+// ================= RE-SCATTER ON LOAD & RESIZE =================
+function scatterPosts() {
+  const containerWidth = postsContainer.offsetWidth;
+  const containerHeight = postsContainer.offsetHeight;
+  const maxLeft = Math.max(0, containerWidth - 220 - 20);
+  const maxTop = Math.max(0, containerHeight - 150 - 20);
+
+  document.querySelectorAll(".post-scatter").forEach(postEl => {
+    postEl.style.left = `${Math.random() * maxLeft}px`;
+    postEl.style.top = `${Math.random() * maxTop}px`;
   });
-});
+}
+
+window.addEventListener("load", scatterPosts);
+window.addEventListener("resize", scatterPosts);
+
 
 // ================= RESPONSIVE NAVIGATION =================
 const navToggle = document.getElementById("nav-toggle");
