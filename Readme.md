@@ -1,6 +1,6 @@
 # Kenyan ARMY Hub
 
-> A fan hub for the Kenyan ARMY community – discover member profiles, watch documentaries & trailers, and share posts with fellow fans.
+A fan hub for the Kenyan ARMY community – discover member profiles, watch documentaries & trailers, and share posts with fellow fans.
 
 ## About the Project
 
