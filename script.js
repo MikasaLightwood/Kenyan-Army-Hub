@@ -121,8 +121,6 @@ if (joinForm) {
     localStorage.setItem("posts", JSON.stringify(savedPosts));
 
     // Render immediately
-    createPostElement(newPost);
-
     joinForm.reset();
     formFeedback.textContent = "You have successfully joined!";
   });
