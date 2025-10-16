@@ -104,7 +104,8 @@ if (showCards.length) {
 
       if (!name || !favoriteMember || !armySince || !message) {
         formFeedback.textContent = "Please fill all fields!";
-        formFeedback.style.color = "red";
+        formFeedback.classList.remove("success");
+        formFeedback.classList.add("error");
         return;
       }
 
@@ -125,11 +126,12 @@ if (showCards.length) {
       localStorage.setItem("posts", JSON.stringify(savedPosts));
 
       formFeedback.textContent = `Welcome, ${name}! 💜 You have successfully joined.`;
-      formFeedback.style.color = "green";
+      formFeedback.classList.remove("error");
+      formFeedback.classList.add("success");
 
       joinForm.reset();
 
-      // Optional: redirect to community page automatically
+      // Optional: redirect to community page
       setTimeout(() => {
         window.location.href = "community.html";
       }, 1000);
@@ -142,7 +144,6 @@ if (showCards.length) {
 
     let savedPosts = JSON.parse(localStorage.getItem("posts")) || [];
 
-    // Add sample posts if localStorage is empty
     if (!savedPosts || savedPosts.length === 0) {
       savedPosts = [
         { id: 1, username: "Stacy", content: "BTS forever 💜", date: new Date().toISOString() },
@@ -157,7 +158,7 @@ if (showCards.length) {
     // Render posts newest first
     [...savedPosts].reverse().forEach(createPostElement);
 
-    // Handle new post submissions (if you have a post form)
+    // Handle post form (if present)
     const postForm = document.getElementById("post-form");
     if (postForm) {
       postForm.addEventListener("submit", (e) => {
@@ -179,31 +180,14 @@ if (showCards.length) {
     // ================= CREATE POST ELEMENT =================
     function createPostElement(post) {
       const postEl = document.createElement("div");
-      postEl.className = "post-scatter";  
-      postEl.style.position = "absolute";
-      postEl.style.width = "220px";
-      postEl.style.padding = "10px";  
-      postEl.style.backgroundColor = "rgba(255, 255, 255, 0.9)";
-      postEl.style.border = "1px solid #ccc";
-      postEl.style.borderRadius = "8px";
-      postEl.style.boxShadow = "0 2px 6px rgba(0,0,0,0.1)";
-      postEl.style.transition = "transform 0.3s";
-      postEl.style.cursor = "pointer";  
+      postEl.classList.add("post-scatter");  
       postEl.innerHTML = `
-        <strong>${post.username}</strong> <br>
-        <small style="color: #555;">${new Date(post.date).toLocaleDateString()}</small>
-        <p style="margin-top: 8px;">${post.content}</p>
-      `;    
-      postEl.addEventListener("mouseenter", () => {
-        postEl.style.transform = "scale(1.05)";
-        postEl.style.zIndex = "10";
-      });
-      postEl.addEventListener("mouseleave", () => {
-        postEl.style.transform = "scale(1)";
-        postEl.style.zIndex = "1";
-      }); 
+        <strong>${post.username}</strong>
+        <small>${new Date(post.date).toLocaleDateString()}</small>
+        <p>${post.content}</p>
+      `;
       postsContainer.appendChild(postEl);
-      scatterPosts(); // scatter after adding
+      scatterPosts();
     }
 
     // ================= RE-SCATTER POSTS =================
